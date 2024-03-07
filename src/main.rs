@@ -1,24 +1,34 @@
-use rand::Rng;
+use rand::distributions::Alphanumeric;
+use rand::{thread_rng, Rng};
 use std::io;
 
 fn main() {
-    //setting up parameters
-    let mut i = 1;
+    //TODO
+    // - [ ] build logic to generate password
+    // - [ ] adequate testing of generated passwords
+
+    //setup
     let mut input: String = String::new();
-    let mut pass_string: String = String::new();
+    let mut password: String = String::new();
+    let mut index = 0;
+
+    //bellow code generates the starting char of the password at random.
+    let first_char: String = thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(1)
+        .map(char::from)
+        .collect();
+    //huge mess but this the only method that worked so far.
 
     io::stdin()
         .read_line(&mut input)
-        .expect("failed to read line");
+        .expect("couldn't read line");
 
-    let int_input = input.trim().parse().unwrap();
+    println!("{}", &first_char);
 
-    while i <= int_input {
-        print!("{}", i);
-        //code idea: have an empty string, loop over characters and see what the previous character was.
-        //i.e a symbol, number, abd...
-        //depending on the previous character it will generate a different character and go to the next iteration.
-
-        i += 1;
+    let previous_char: String = first_char;
+    password.push_str(&previous_char);
+    while index < input.trim().parse().unwrap() {
+        index += 1;
     }
 }
